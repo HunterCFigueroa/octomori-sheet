@@ -1,12 +1,12 @@
 <component name="libraryTable">
-  <library name="blades-in-the-dark" type="javaScript">
+  <library name="octomori" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/../../systems/blades-in-the-dark" />
+        <item url="file://$PROJECT_DIR$/../../systems/octomori" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../../systems/blades-in-the-dark" />
+      <root url="file://$PROJECT_DIR$/../../systems/octomori" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

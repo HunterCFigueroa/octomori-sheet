@@ -1,4 +1,4 @@
-import { BladesActiveEffect } from "../../../systems/blades-in-the-dark/module/blades-active-effect.js";
+import { BladesActiveEffect } from "../../../systems/octomori/module/blades-active-effect.js";
 import { Utils, MODULE_ID } from "./utils.js";
 import { queueUpdate } from "./lib/update-queue.js";
 
@@ -11,7 +11,7 @@ export class BladesAlternateClassSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["blades-alt", "sheet", "item", "class"],
-      template: "modules/bitd-alternate-sheets/templates/class-sheet.html",
+      template: "modules/octomori-sheet/templates/class-sheet.html",
       width: 600,
       height: 600,
       // tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "playbook"}]

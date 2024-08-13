@@ -1,9 +1,9 @@
-import { BladesSheet } from "../../../systems/blades-in-the-dark/module/blades-sheet.js";
-import { BladesActiveEffect } from "../../../systems/blades-in-the-dark/module/blades-active-effect.js";
+import { BladesSheet } from "../../../systems/octomori/module/blades-sheet.js";
+import { BladesActiveEffect } from "../../../systems/octomori/module/blades-active-effect.js";
 import { Utils, MODULE_ID } from "./utils.js";
 import { queueUpdate } from "./lib/update-queue.js";
 
-// import { migrateWorld } from "../../../systems/blades-in-the-dark/module/migration.js";
+// import { migrateWorld } from "../../../systems/octomori/module/migration.js";
 
 /**
  * Pure chaos
@@ -21,7 +21,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["blades-alt", "sheet", "pc", "actor"],
-      template: "modules/bitd-alternate-sheets/templates/actor-sheet.html",
+      template: "modules/octomori-sheet/templates/actor-sheet.html",
       width: 800,
       height: 1200,
       tabs: [
@@ -362,7 +362,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
     sheetData.editable = this.options.editable;
     sheetData.isGM = game.user.isGM;
     sheetData.showAliasInDirectory = this.actor.getFlag(
-      "bitd-alternate-sheets",
+      "octomori-sheet",
       "showAliasInDirectory"
     );
     const actorData = sheetData.data;
@@ -378,7 +378,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
       sheetData.system.acquaintances_label == "BITD.Acquaintances"
         ? "bitd-alt.Acquaintances"
         : sheetData.system.acquaintances_label;
-    let rawNotes = this.actor.getFlag("bitd-alternate-sheets", "notes");
+    let rawNotes = this.actor.getFlag("octomori-sheet", "notes");
     if (rawNotes) {
       let pattern = /(@UUID\[([^]*?)]){[^}]*?}/gm;
       let linkedEntities = [...rawNotes.matchAll(pattern)];
@@ -547,10 +547,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
 
     // Calculate Load
     let loadout = 0;
-    let equipped = await this.actor.getFlag(
-      "bitd-alternate-sheets",
-      "equipped-items"
-    );
+    let equipped = await this.actor.getFlag("octomori-sheet", "equipped-items");
     if (equipped) {
       for (const i of equipped) {
         loadout += parseInt(i.load);
@@ -586,7 +583,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
   }
 
   async clearLoad() {
-    await this.actor.setFlag("bitd-alternate-sheets", "equipped-items", "");
+    await this.actor.setFlag("octomori-sheet", "equipped-items", "");
   }
 
   addTermTooltips(html) {
@@ -873,9 +870,9 @@ export class BladesAlternateActorSheet extends BladesSheet {
     html.find(".toggle-alias-display").click(async (event) => {
       event.preventDefault();
       this.actor.setFlag(
-        "bitd-alternate-sheets",
+        "octomori-sheet",
         "showAliasInDirectory",
-        !this.actor.getFlag("bitd-alternate-sheets", "showAliasInDirectory")
+        !this.actor.getFlag("octomori-sheet", "showAliasInDirectory")
       );
     });
 

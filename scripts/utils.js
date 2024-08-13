@@ -1,7 +1,7 @@
 import { BladesAlternateActorSheet } from "./blades-alternate-actor-sheet.js";
 import { queueUpdate } from "./lib/update-queue.js";
 
-export const MODULE_ID = "bitd-alternate-sheets";
+export const MODULE_ID = "octomori-sheet";
 
 export class Utils {
   /**
@@ -231,11 +231,11 @@ export class Utils {
 
   static async getSourcedItemsByType(item_type) {
     const populateFromCompendia = game.settings.get(
-      "bitd-alternate-sheets",
+      "octomori-sheet",
       "populateFromCompendia"
     );
     const populateFromWorld = game.settings.get(
-      "bitd-alternate-sheets",
+      "octomori-sheet",
       "populateFromWorld"
     );
     let limited_items;
@@ -244,7 +244,7 @@ export class Utils {
       limited_items = await this.getAllItemsByType(item_type);
     } else if (populateFromCompendia && !populateFromWorld) {
       limited_items = await game.packs
-        .get("blades-in-the-dark." + item_type)
+        .get("octomori." + item_type)
         .getDocuments();
     } else if (!populateFromCompendia && populateFromWorld) {
       if (item_type === "npc") {
@@ -375,7 +375,7 @@ export class Utils {
     } else if (type == "item") {
       // let item = actor.items.find(item => item.id === id);
       let equipped_items = await actor.getFlag(
-        "bitd-alternate-sheets",
+        "octomori-sheet",
         "equipped-items"
       );
       if (!equipped_items) {
@@ -409,11 +409,7 @@ export class Utils {
       // else{
       //   equipped_items = [id];
       // }
-      await actor.setFlag(
-        "bitd-alternate-sheets",
-        "equipped-items",
-        equipped_items
-      );
+      await actor.setFlag("octomori-sheet", "equipped-items", equipped_items);
     }
   }
 
@@ -423,18 +419,18 @@ export class Utils {
       .map((item) => item._id);
     for (const character of listOfAllCharacterIds) {
       const showPronouns = game.settings.get(
-        "bitd-alternate-sheets",
+        "octomori-sheet",
         "showPronounsInCharacterDirectory"
       );
       const showAliasInDirectory = game.actors
         .get(character)
-        .getFlag("bitd-alternate-sheets", "showAliasInDirectory");
+        .getFlag("octomori-sheet", "showAliasInDirectory");
       let computedName = showAliasInDirectory
         ? game.actors.get(character).system.alias
         : game.actors.get(character).name;
       const pronouns = game.actors
         .get(character)
-        .getFlag("bitd-alternate-sheets", "pronouns");
+        .getFlag("octomori-sheet", "pronouns");
       if (showPronouns && pronouns && pronouns !== "Pronouns") {
         computedName = `${computedName} (${pronouns})`;
       }
@@ -673,7 +669,7 @@ export class Utils {
     //get the original playbook
     let selected_playbook_source;
     if (actor.system.playbook !== "" && actor.system.playbook) {
-      // selected_playbook_source = await game.packs.get("blades-in-the-dark.class").getDocument(this.system.playbook);
+      // selected_playbook_source = await game.packs.get("octomori.class").getDocument(this.system.playbook);
       selected_playbook_source = await Utils.getItemByType(
         "class",
         actor.system.playbook

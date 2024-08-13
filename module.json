@@ -1,6 +1,6 @@
 {
-  "name": "bitd-alternate-sheets",
-  "title": "Blades in the Dark Alternate Sheets",
+  "name": "octomori-sheet",
+  "title": "Octomori sheet",
   "description": "",
   "version": "0.0.1",
   "library": "false",
@@ -15,13 +15,6 @@
       "name": "Justin Ross",
       "url": "https://github.com/justinross",
       "discord": "thsjstin#5654"
-    }
-  ],
-  "dependencies": [
-    {
-      "name": "blades-in-the-dark",
-      "manifest": "https://raw.githubusercontent.com/Dez384/foundryvtt-blades-in-the-dark/master/system.json",
-      "type": "system"
     }
   ],
   "conflicts": [],

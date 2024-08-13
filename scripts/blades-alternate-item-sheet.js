@@ -1,8 +1,8 @@
-// import { BladesActiveEffect } from "../../../systems/blades-in-the-dark/module/blades-active-effect.js";
+// import { BladesActiveEffect } from "../../../systems/octomori/module/blades-active-effect.js";
 import { Utils, MODULE_ID } from "./utils.js";
 import { queueUpdate } from "./lib/update-queue.js";
 
-// import { migrateWorld } from "../../../systems/blades-in-the-dark/module/migration.js";
+// import { migrateWorld } from "../../../systems/octomori/module/migration.js";
 
 /**
  * Pure chaos
@@ -53,7 +53,7 @@ export class BladesAlternateItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["blades-alt", "sheet", "item"],
-      template: "modules/bitd-alternate-sheets/templates/item-sheet.html",
+      template: "modules/octomori-sheet/templates/item-sheet.html",
       width: 400,
       height: 600,
       // tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "playbook"}]

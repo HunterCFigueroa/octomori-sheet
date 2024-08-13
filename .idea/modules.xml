@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/bitd-alternate-sheets.iml" filepath="$PROJECT_DIR$/.idea/bitd-alternate-sheets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/octomori-sheet.iml" filepath="$PROJECT_DIR$/.idea/octomori-sheet.iml" />
     </modules>
   </component>
 </project>

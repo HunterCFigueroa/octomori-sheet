@@ -9,19 +9,32 @@
         <div class="status-buttons">
           <div class="coins-box {{#if coins_open}}open{{/if}} pointer">
             <div class="mini-view"><div class="placeholder"></div><span class="coin-values label-text">{{system.coins}}/{{system.coins_stashed}}</span></div>
-            <div class="full-view">{{> "modules/bitd-alternate-sheets/templates/parts/coins.html" actor=actor}}</div>
+            <div class="full-view">{{> "modules/octomori-sheet/templates/parts/coins.html" actor=actor}}</div>
           </div>
           <div class="load-box {{#if load_open}}open{{/if}} pointer">
             <div class="mini-view"><div class="placeholder"></div><span class="load-amounts label-text {{#if (lt loadout max_load)}}below-max{{else if (eq loadout max_load)}}at-max{{else if (gt loadout max_load)}}over-max{{/if}}">{{loadout}}/{{max_load}}</span></div>
-            <div class="full-view">{{> "modules/bitd-alternate-sheets/templates/parts/load.html"}}</div>
+            <div class="full-view">{{> "modules/octomori-sheet/templates/parts/load.html"}}</div>
           </div>
           <div class="harm-box {{#if harm_open}}open{{/if}} pointer">
             <div class="mini-view harm{{#if (or system.harm.light.one system.harm.light.two)}}-1{{/if}}{{#if
               (or system.harm.medium.one system.harm.medium.two)}}-2{{/if}}{{#if system.harm.heavy.one}}-3{{/if}}"><div class="placeholder"></div></div>
-            <div class="full-view">{{> "modules/bitd-alternate-sheets/templates/parts/harm.html" actor=actor}}</div>
+            <div class="full-view">{{> "modules/octomori-sheet/templates/parts/harm.html" actor=actor}}</div>
           </div>
 
         </div><div class="stress-trauma-box">
+          <header class="stress-bar full-bar">
+            {{localize system.mana.name}}
+            <div class="stripe-tooth-body stress">
+            {{#multiboxes system.mana.value}}
+              <input type="radio" id="{{../actor._id}}-mana-0"
+                     name="system.mana.value" value="0" checked="checked" class="zero">
+              {{#times_from_1 system.mana.max}}
+                <input type="radio" id="character-{{../actor._id}}-mana-{{this}}" name="system.mana.value" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                <label for="character-{{../actor._id}}-mana-{{this}}" class="{{#if (gte ../system.mana.value @this)}}on{{/if}} radio-toggle"  ></label>
+              {{/times_from_1}}
+            {{/multiboxes}}
+            </div>
+          </header>
           <header class="stress-bar full-bar">
             {{localize system.stress.name}}
             <div class="stripe-tooth-body stress">
@@ -55,18 +68,18 @@
       <div class="name-alias bio">
         <span class="name">{{{inline-editable-text allow_edit "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text allow_edit "system.alias" (localize "BITD.Alias") system.alias actor._id this}}}"</span>
         <!-- {{#if allow_edit}}
-          <input type="checkbox" id="actor-{{actor._id}}-showAliasInDirectory" data-tooltip="Display Alias in Directory" name="flags.bitd-alternate-sheets.showAliasInDirectory" {{checked showAliasInDirectory}} /><label class="showAliasCheckbox" for="actor-{{actor._id}}-showAliasInDirectory">Show Alias In Directory</label>
+          <input type="checkbox" id="actor-{{actor._id}}-showAliasInDirectory" data-tooltip="Display Alias in Directory" name="flags.octomori-sheet.showAliasInDirectory" {{checked showAliasInDirectory}} /><label class="showAliasCheckbox" for="actor-{{actor._id}}-showAliasInDirectory">Show Alias In Directory</label>
         {{/if}} -->
       </div>
       <div class="heritage-background bio">
         {{{inline-editable-text allow_edit "system.heritage" (localize "BITD.Heritage") heritage actor._id this}}} &bull; {{{inline-editable-text allow_edit "system.background" (localize "BITD.Background") background actor._id this}}} &bull; {{{inline-editable-text allow_edit "system.background-details" (localize "bitd-alt.BackgroundDetails") system.background-details actor._id this}}} &bull; {{{inline-editable-text allow_edit "system.vice" (localize "BITD.Vice") vice actor._id this}}} &bull; {{{inline-editable-text allow_edit "system.vice-purveyor" (localize "bitd-alt.VicePurveyor") system.vice-purveyor actor._id this}}}
       </div>
-      <div class="look bio">{{{inline-editable-text allow_edit "system.look" "Look" system.look actor._id this}}} &bull; {{{inline-editable-text allow_edit "flags.bitd-alternate-sheets.pronouns" "Pronouns" data.flags.bitd-alternate-sheets.pronouns actor._id this}}}</div>
+      <div class="look bio">{{{inline-editable-text allow_edit "system.look" "Look" system.look actor._id this}}} &bull; {{{inline-editable-text allow_edit "flags.octomori-sheet.pronouns" "Pronouns" data.flags.octomori-sheet.pronouns actor._id this}}}</div>
       <div class="abilities-list">
         {{#each my_abilities}}<span data-tooltip="{{clean-html this.system.description}}" class="v10-tooltip">{{clean-name this.name}}</span>&nbsp;{{#unless @last}}-&nbsp;{{/unless}}{{/each}}
       </div>
       
-      {{> "modules/bitd-alternate-sheets/templates/parts/attributes.html" owner=this.actor}}
+      {{> "modules/octomori-sheet/templates/parts/attributes.html" owner=this.actor}}
       </section>
     </section>
     <section class="tab-space">
@@ -112,7 +125,7 @@
               <section class="ability-list check-list">
                 {{#each available_playbook_abilities as |ability index|}}
                 {{#with ../actor as |actor|}}
-                  {{> "modules/bitd-alternate-sheets/templates/parts/ability.html" actor=actor ability=ability allow_edit=../../allow_edit}}
+                  {{> "modules/octomori-sheet/templates/parts/ability.html" actor=actor ability=ability allow_edit=../../allow_edit}}
                 {{/with}}
                 {{/each}}
               </section>
@@ -121,7 +134,7 @@
               <header class="full-bar flex-header context-items"><span>{{localize "bitd-alt.items"}}</span>{{#if allow_edit}}<a class="item-list-add add-button" data-item-type="item" data-group-by="system.class"><i class="fas fa-plus"></i></a>{{/if}}</header>
               {{#each my_items as |item index|}}
                 {{#with ../actor as |actor|}}
-                {{> "modules/bitd-alternate-sheets/templates/parts/item.html" actor=actor item=item}}
+                {{> "modules/octomori-sheet/templates/parts/item.html" actor=actor item=item}}
                 {{/with}}
               {{/each}}
             </section>
@@ -143,7 +156,7 @@
               <header class="full-bar">&nbsp;</header>
               {{#each generic_items as |item index|}}
                 {{#with ../actor as |actor|}}
-                  {{> "modules/bitd-alternate-sheets/templates/parts/item.html" actor=actor item=item}}
+                  {{> "modules/octomori-sheet/templates/parts/item.html" actor=actor item=item}}
                 {{/with}}
               {{/each}}
             </section>
@@ -164,12 +177,12 @@
 
 
             <header>{{localize "bitd-alt.NotesInstructions"}}</header>
-            {{editor notes target="flags.bitd-alternate-sheets.notes" button=true editable=true documents=true engine="prosemirror" collaborate=true}}
+            {{editor notes target="flags.octomori-sheet.notes" button=true editable=true documents=true engine="prosemirror" collaborate=true}}
           </div>
         </div>
         <!-- todo: put the downtime tab back once it's actually useful and maybe translated -->
 <!--        <div class="tab downtime" data-tab="downtime" data-group="primary-tabs">-->
-<!--          <header>I. Payoff &mdash; II. Heat &mdash; III. Entanglements &mdash; IV. Downtime Activities</header>-->
+<!--          <header>I. Payoff &mdash; II. Pressure &mdash; III. Entanglements &mdash; IV. Downtime Activities</header>-->
 <!--          <div class="downtimeWrapper">-->
 <!--            <div class="column">-->
 <!--              <section class="payoff">-->
@@ -199,8 +212,8 @@
 <!--                  </ul>-->
 <!--                </ul>-->
 <!--              </section>-->
-<!--              <section class="heat">-->
-<!--                <h3>Heat</h3>-->
+<!--              <section class="pressure">-->
+<!--                <h3>Pressure</h3>-->
 <!--                <ul>-->
 <!--                  <li>When HEAT track fills, clear it, mark a WANTED LEVEL, and roll over remaining HEAT.</li>-->
 <!--                  <li><strong>0 HEAT</strong>: Smooth & quiet; low exposure.</li>-->
@@ -222,9 +235,9 @@
 <!--                <table>-->
 <!--                  <tr>-->
 <!--                    <th></th>-->
-<!--                    <th>Heat 0-3</th>-->
-<!--                    <th>Heat 4/5</th>-->
-<!--                    <th>Heat 6+</th>-->
+<!--                    <th>Pressure 0-3</th>-->
+<!--                    <th>Pressure 4/5</th>-->
+<!--                    <th>Pressure 6+</th>-->
 <!--                  </tr>-->
 <!--                  <tr>-->
 <!--                    <td>1-3</td>-->
@@ -283,7 +296,7 @@
 <!--                  </ul>-->
 <!--                  <li>Filled healing clock: Reduce all harms by one level (segments roll over)</li>-->
 <!--                </ul>-->
-<!--                <h4>Reduce Heat <i class="fas fa-dice"></i></h4>-->
+<!--                <h4>Reduce Pressure <i class="fas fa-dice"></i></h4>-->
 <!--                <ul>-->
 <!--                  <li>Roll an action to reduce HEAT segments</li>-->
 <!--                </ul>-->
@@ -312,7 +325,7 @@
   {{#if isGM}}
     <i class="fas fa-bug debug-toggle {{#if show_debug}}on{{/if}} "></i>
     {{#if show_debug}}
-        {{> "modules/bitd-alternate-sheets/templates/parts/active-effects.html"}}</div>
+        {{> "modules/octomori-sheet/templates/parts/active-effects.html"}}</div>
         <hr />
         <h3>All Items</h3>
         {{#each actor.items as |item id|}}

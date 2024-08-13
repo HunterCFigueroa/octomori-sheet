@@ -126,10 +126,7 @@ export const registerHandlebarsHelpers = function () {
 
   Handlebars.registerHelper("item-equipped", function (actor, id) {
     let actor_doc = game.actors.get(actor._id);
-    let equipped_items = actor_doc.getFlag(
-      "bitd-alternate-sheets",
-      "equipped-items"
-    );
+    let equipped_items = actor_doc.getFlag("octomori-sheet", "equipped-items");
     if (equipped_items) {
       let equipped = equipped_items.find((item) => item.id === id);
       return equipped;

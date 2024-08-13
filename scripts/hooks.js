@@ -37,7 +37,7 @@ export async function registerHooks() {
               droppedItemRegex,
               `{${linkedDoc.name}}`
             );
-            doc.innerHTML = `<img src="systems/blades-in-the-dark/styles/assets/progressclocks-svg/Progress Clock ${linkedDoc.system.type}-${linkedDoc.system.value}.svg" class="clockImage" data-uuid="${match[2]}" />
+            doc.innerHTML = `<img src="systems/octomori/styles/assets/progressclocks-svg/Progress Clock ${linkedDoc.system.type}-${linkedDoc.system.value}.svg" class="clockImage" data-uuid="${match[2]}" />
                 <br/> 
                 ${droppedItemTextRenamed}`;
             // ${match[0]}`;
@@ -64,7 +64,7 @@ export async function registerHooks() {
     });
     for (let index = 0; index < characters.length; index++) {
       const character = characters[index];
-      let notes = await character.getFlag("bitd-alternate-sheets", "notes");
+      let notes = await character.getFlag("octomori-sheet", "notes");
       notes = notes ? notes : "";
       if (notes.includes(sheet.actor._id)) {
         character.sheet.render(false);
