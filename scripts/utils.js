@@ -200,6 +200,9 @@ export class Utils {
     let world_items = [];
     let compendium_items = [];
 
+    console.log("Game items", game.items);
+    console.log("Game actors", game.actors);
+
     if (item_type === "npc") {
       world_items = game.actors
         .filter((e) => e.type === item_type)
@@ -239,6 +242,9 @@ export class Utils {
       "populateFromWorld"
     );
     let limited_items;
+
+    console.log("populateFromCompendia", populateFromCompendia);
+    console.log("populateFromWorld", populateFromWorld);
 
     if (populateFromCompendia && populateFromWorld) {
       limited_items = await this.getAllItemsByType(item_type);
@@ -349,10 +355,12 @@ export class Utils {
   }
 
   static async toggleOwnership(state, actor, type, id) {
+    console.log(state, actor, type, id);
     if (type == "ability") {
       if (state) {
         let all_of_type = await Utils.getSourcedItemsByType(type);
         let checked_item = all_of_type.find((item) => item.id == id);
+        console.log("A");
         let added_item = await actor.createEmbeddedDocuments("Item", [
           {
             type: checked_item.type,
@@ -361,9 +369,12 @@ export class Utils {
           },
         ]);
       } else {
+        console.log("B");
         if (actor.getEmbeddedDocument("Item", id)) {
+          console.log("1", actor.getEmbeddedDocument("Item", id));
           actor.deleteEmbeddedDocuments("Item", [id]);
         } else {
+          console.log("2", type, id);
           let item_source = await Utils.getItemByType(type, id);
           let item_source_name = item_source.name;
           let matching_owned_item = actor.items.find(
@@ -568,12 +579,16 @@ export class Utils {
     duplicate_owned_items = false,
     include_owned_items = false
   ) {
+    console.log("filter playbook", filter_playbook);
     let virtual_list = [];
     let owned_items;
     let all_game_items = await Utils.getSourcedItemsByType(type);
     let sheet_items;
 
+    console.log("all_game_items!!!", all_game_items, type);
+
     sheet_items = all_game_items.filter((item) => {
+      console.log("ITEM!!!", item, filter_playbook);
       if (item.system.class !== undefined) {
         if (item.system.class === "" && type === "ability") {
           return false;

@@ -68,6 +68,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
   /** @override **/
   async handleDrop(event, droppedEntity) {
     let droppedEntityFull = await fromUuid(droppedEntity.uuid);
+    console.log("droppedEntity", droppedEntity);
     switch (droppedEntityFull.type) {
       case "npc":
         await Utils.addAcquaintance(this.actor, droppedEntityFull);
@@ -463,6 +464,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
     let all_generic_items = [];
     let my_items = [];
     if (sheetData.selected_playbook) {
+      console.log("SELECTED PLAYBOOK");
       combined_abilities_list = await Utils.getVirtualListOfItems(
         "ability",
         sheetData,
@@ -486,6 +488,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
         sheetData.selected_playbook.id
       );
     } else {
+      console.log("NO PLAY BOOK SELECTED");
       combined_abilities_list = await Utils.getVirtualListOfItems(
         "ability",
         sheetData,
@@ -641,10 +644,10 @@ export class BladesAlternateActorSheet extends BladesSheet {
           name: "acquaintances",
           value: "none",
           options: {
-            all: "All contacts",
+            all: "All community_members",
             friendsrivals: "Keep only friends and rivals",
-            custom: "Keep any added contacts",
-            both: "Keep added contacts and friends/rivals",
+            custom: "Keep any added community_members",
+            both: "Keep added community_members and friends/rivals",
             none: "Replace all",
           },
         };
@@ -901,6 +904,7 @@ export class BladesAlternateActorSheet extends BladesSheet {
       ev.stopPropagation();
       let checkbox = ev.target;
       let ability_id = checkbox.closest(".ability-block").dataset.abilityId;
+      console.log(checkbox.closest(".ability-block").dataset);
       await Utils.toggleOwnership(
         checkbox.checked,
         this.actor,

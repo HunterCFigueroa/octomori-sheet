@@ -187,4 +187,8 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("upper-first", function (input) {
     return input.charAt(0).toUpperCase() + input.slice(1);
   });
+
+  Handlebars.registerHelper("json", function (context) {
+    return JSON.stringify(context, null, 2); // Pretty print with 2 spaces
+  });
 };
